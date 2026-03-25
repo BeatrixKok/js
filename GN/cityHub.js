@@ -142,7 +142,7 @@ class cityHub extends Phaser.Scene {
             }
         }
 
-        // ========= Market Entery ((Both Player and Grandma must be in area)) =========
+       // ========= Market Entry ((Both Player and Grandma must be in area)) =========
         const entryX_Min = 2760;
         const entryX_Max = 2900;
         const entryY_Min = 890;
@@ -153,13 +153,15 @@ class cityHub extends Phaser.Scene {
 
         if (playerInArea) {
             if (grandmaInArea) {
-                this.scene.start("lv2_htp", { inventory: this.inventory });
+                // STOP the current scene and launch the HTP scene
+                // Passing the inventory so it carries over to the market later
+                this.scene.start("lv2_htp", { inventory: this.inventory }); 
             } else {
                 // Specific message for the door if they aren't together
                 if (!this.hasWarnedPlayer && ui) {
                     ui.showDialogue("Wait for me at the door, dear! We should go in together.");
                     this.hasWarnedPlayer = true;
-                    this.time.delayedCall(3000, () => { ui.hideDialogue(); });
+                    this.time.delayedCall(3000, () => { if(ui) ui.hideDialogue(); });
                     this.time.delayedCall(6000, () => { this.hasWarnedPlayer = false; });
                 }
             }
