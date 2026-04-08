@@ -65,16 +65,14 @@ class grandmahouse_lv1 extends Phaser.Scene {
         this.scene.launch("UIScene");
     }
     
-    // Debug fix: Increased delay to 500ms and added safety check
-    this.time.delayedCall(500, () => {
+    // Fix: Wait for UI to be ready, then trigger Level 1 start dialogue
+    this.time.delayedCall(300, () => {
         let ui = this.scene.get("UIScene");
         if (ui && ui.dialogBox) {
             ui.setInventoryMode(1);
             ui.updateHearts(this.gameManager.hearts);
             ui.showDialogue("I want to stay active with the family...\nCan you help me text them for a dinner today?");
-            this.time.delayedCall(4000, () => {
-                if (ui.hideDialogue) ui.hideDialogue();
-            });
+            this.time.delayedCall(4000, () => ui.hideDialogue());
         }
     });
 

@@ -173,12 +173,9 @@ class UIScene extends Phaser.Scene {
   }
 
   showDialogue(text) {
-    // Debug fix: Check if UI elements are created before using them
-    if (!this.dialogBox || !this.dialogText) {
-      console.warn("UIScene: showDialogue called before UI was ready.");
-      return;
-    }
-    
+    // Safety check: if scene isn't fully created yet, stop the crash
+    if (!this.dialogBox) return; 
+
     this.dialogBox.setVisible(true);
     this.dialogText.setVisible(true).setText(text);
     this.grandmaIcon.setVisible(true);
@@ -186,6 +183,9 @@ class UIScene extends Phaser.Scene {
   }
 
   hideDialogue() {
+    // Safety check: if scene isn't fully created yet, stop the crash
+    if (!this.dialogBox) return;
+
     this.dialogBox.setVisible(false);
     this.dialogText.setVisible(false);
     this.grandmaIcon.setVisible(false);
